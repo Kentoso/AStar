@@ -1,7 +1,7 @@
 # AStar
 Controls:
-1 - Wall brush
-2 - Target brush
-3 - Player brush
-Space - generate path
-R - restart grid
+1 - Wall brush <br>
+2 - Target brush <br>
+3 - Player brush <br>
+Space - generate path <br>
+R - restart grid <br>
