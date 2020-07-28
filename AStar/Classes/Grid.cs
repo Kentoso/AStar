@@ -55,21 +55,24 @@ namespace AStar
 
                     int checkX = node.GridPosition.x + x;
                     int checkY = node.GridPosition.y + y;
+                    (int x, int y) increment = (x, y);
                     if (checkX >= 0 && checkX < Items.GetLength(0) && checkY >= 0 && checkY < Items.GetLength(1))
                     {
-                        if (x == 1 && y == 1 || x == 1 && y == -1 || x == -1 && y == 1 || x == -1 && y == -1)
+                        if (increment == (1, 1) && Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall)
                         {
-                            if (Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall ||
-                                Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall && Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall ||
-                                Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall ||
-                                Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall)
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                neighbours.Add(Items[checkX, checkY]);
-                            }
+                            continue;
+                        }
+                        else if(increment == (1, -1) && Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall && Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall)
+                        {
+                            continue;
+                        }
+                        else if (increment == (-1, 1) && Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall)
+                        {
+                            continue;
+                        }
+                        else if (increment == (-1, -1) && Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall)
+                        {
+                            continue;
                         }
                         else
                         {

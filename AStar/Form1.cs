@@ -122,6 +122,8 @@ namespace AStar
                     graphics.Clear(SystemColors.Control);
                     grid.DrawLines(graphics);
                     grid.DrawItem(graphics);
+                    playerNode = null;
+                    finishNode = null;
                     break;
                 case Keys.Space:
                     if (playerNode != null && finishNode != null)
