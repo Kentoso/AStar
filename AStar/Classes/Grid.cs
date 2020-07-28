@@ -57,11 +57,27 @@ namespace AStar
                     int checkY = node.GridPosition.y + y;
                     if (checkX >= 0 && checkX < Items.GetLength(0) && checkY >= 0 && checkY < Items.GetLength(1))
                     {
-                         neighbours.Add(Items[checkX, checkY]);
+                        if (x == 1 && y == 1 || x == 1 && y == -1 || x == -1 && y == 1 || x == -1 && y == -1)
+                        {
+                            if (Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall ||
+                                Items[node.GridPosition.x + 1, node.GridPosition.y].State == GridItemStates.Wall && Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall ||
+                                Items[node.GridPosition.x, node.GridPosition.y - 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall ||
+                                Items[node.GridPosition.x, node.GridPosition.y + 1].State == GridItemStates.Wall && Items[node.GridPosition.x - 1, node.GridPosition.y].State == GridItemStates.Wall)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                neighbours.Add(Items[checkX, checkY]);
+                            }
+                        }
+                        else
+                        {
+                            neighbours.Add(Items[checkX, checkY]);
+                        }
                     }
                 }
             }
-
             return neighbours;
         }
         public void DrawLines(Graphics graphics)
