@@ -1,5 +1,5 @@
 # AStar
-Controls:
+Controls: <br>
 1 - Wall brush <br>
 2 - Target brush <br>
 3 - Player brush <br>
