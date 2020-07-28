@@ -44,7 +44,10 @@ namespace AStar
                     switch (Brush)
                     {
                         case Grid.DrawStates.Wall:
-                            grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+                            if (grid.Items[mousePos.X / 20, mousePos.Y / 20].State == Grid.GridItemStates.Empty)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+                            }
                             break;
                         case Grid.DrawStates.Player:
                             if (playerNode == null)
