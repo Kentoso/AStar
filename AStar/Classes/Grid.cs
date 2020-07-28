@@ -95,11 +95,11 @@ namespace AStar
                     }
                     if (Items[i, j].State == Grid.GridItemStates.Player)
                     {
-                        graphics.FillRectangle(Brushes.Blue, 20f * i, 20f * j, 20f, 20f);
+                        graphics.FillRectangle(Brushes.Purple, 20f * i, 20f * j, 20f, 20f);
                     }
                     if (Items[i, j].State == Grid.GridItemStates.Finish)
                     {
-                        graphics.FillRectangle(Brushes.Green, 20f * i, 20f * j, 20f, 20f);
+                        graphics.FillRectangle(Brushes.ForestGreen, 20f * i, 20f * j, 20f, 20f);
                     }
                     
                 }

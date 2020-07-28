@@ -34,7 +34,6 @@ namespace AStar
                 {
                     if (neighbour.State == Grid.GridItemStates.Wall || closedSet.Contains(neighbour))
                     {
- 
                         continue;
                     }
 

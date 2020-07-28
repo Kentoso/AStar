@@ -16,6 +16,9 @@ namespace AStar
         private Grid grid;
         private Graphics graphics;
         private Point mousePos;
+        private Node playerNode;
+        private Node finishNode;
+        private Grid.DrawStates Brush = Grid.DrawStates.Wall;
         public Form1()
         {
             InitializeComponent();
@@ -38,7 +41,26 @@ namespace AStar
                 try
                 {
                     mousePos = this.PointToClient(MousePosition);
-                    grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+                    switch (Brush)
+                    {
+                        case Grid.DrawStates.Wall:
+                            grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+                            break;
+                        case Grid.DrawStates.Player:
+                            if (playerNode == null)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Player;
+                                playerNode = grid.Items[mousePos.X / 20, mousePos.Y / 20];
+                            }
+                            break;
+                        case Grid.DrawStates.Finish:
+                            if (finishNode == null)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Finish;
+                                finishNode = grid.Items[mousePos.X / 20, mousePos.Y / 20];
+                            }
+                            break;
+                    }
                     grid.DrawItem(graphics);
                 }
                 catch (System.IndexOutOfRangeException)
@@ -54,7 +76,30 @@ namespace AStar
                 try
                 {
                     mousePos = this.PointToClient(MousePosition);
-                    grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+
+                    switch (Brush)
+                    {
+                        case Grid.DrawStates.Wall:
+                            if (grid.Items[mousePos.X / 20, mousePos.Y / 20].State == Grid.GridItemStates.Empty)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Wall;
+                            }
+                            break;
+                        case Grid.DrawStates.Player:
+                            if (playerNode == null)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Player;
+                                playerNode = grid.Items[mousePos.X / 20, mousePos.Y / 20];
+                            }
+                            break;
+                        case Grid.DrawStates.Finish:
+                            if (finishNode == null)
+                            {
+                                grid.Items[mousePos.X / 20, mousePos.Y / 20].State = Grid.GridItemStates.Finish;
+                                finishNode = grid.Items[mousePos.X / 20, mousePos.Y / 20];
+                            }
+                            break;
+                    }
                     grid.DrawItem(graphics);
                 }
                 catch (System.IndexOutOfRangeException)
@@ -70,22 +115,32 @@ namespace AStar
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.R)
+            switch (e.KeyCode)
             {
-                grid = new Grid(this);
-                graphics.Clear(SystemColors.Control);
-                grid.DrawLines(graphics);
-                grid.DrawItem(graphics);
-            }
-            if (e.KeyCode == Keys.Space)
-            {
-                Debug.WriteLine("yes");
-                Node playerNode = grid.Items[0, 0];
-                playerNode.State = Grid.GridItemStates.Player;
-                Node finishNode = grid.Items[20, 20];
-                finishNode.State = Grid.GridItemStates.Finish;
-                Pathfinding.FindPath(grid, playerNode, finishNode);
-                grid.DrawItem(graphics);
+                case Keys.R:
+                    grid = new Grid(this);
+                    graphics.Clear(SystemColors.Control);
+                    grid.DrawLines(graphics);
+                    grid.DrawItem(graphics);
+                    break;
+                case Keys.Space:
+                    if (playerNode != null && finishNode != null)
+                    {
+                        playerNode.State = Grid.GridItemStates.Player;
+                        finishNode.State = Grid.GridItemStates.Finish;
+                        Pathfinding.FindPath(grid, playerNode, finishNode);
+                        grid.DrawItem(graphics);
+                    }
+                    break;
+                case Keys.D1:
+                    Brush = Grid.DrawStates.Wall;
+                    break;
+                case Keys.D2:
+                    Brush = Grid.DrawStates.Finish;
+                    break;
+                case Keys.D3:
+                    Brush = Grid.DrawStates.Player;
+                    break;
             }
         }
     }
